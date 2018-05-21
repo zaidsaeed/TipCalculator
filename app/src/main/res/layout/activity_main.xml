@@ -31,6 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/total_amount_container"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+
     <EditText
         android:id="@+id/tip_percentage"
         android:layout_width="match_parent"
@@ -43,12 +44,23 @@
         />
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/tip_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tip_percentage_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:clickable="true"
+        android:text="Need Help Deciding a Tip Percentage?"
+        />
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/number_of_people_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tip_percentage_container"
+        app:layout_constraintTop_toBottomOf="@+id/tip_suggestion"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
         <EditText

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditPercentage;
     private EditText mNumberOfPeople;
     private Button mDone;
+    private TextView mSuggestTip;
     private CoordinatorLayout mSnackBarLayout;
 
     public void createSnackBar(String snackBarMessage){
@@ -53,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         mNumberOfPeople = (EditText) findViewById(R.id.number_of_people);
         mDone = (Button) findViewById(R.id.done);
         mSnackBarLayout = findViewById(R.id.snackbar_container);
+        mSuggestTip = (TextView) findViewById(R.id.tip_suggestion);
+        mSuggestTip.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View V){
+                Intent toSuggestTipIntent = new Intent(V.getContext(), SuggestTip.class);
+                V.getContext().startActivity(toSuggestTipIntent);
+            }
+        });
+
         mDone.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
