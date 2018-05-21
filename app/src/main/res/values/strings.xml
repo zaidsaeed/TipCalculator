@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TipCalculator</string>
+    <string name="amount_description">Enter the total amount:</string>
+    <string name="tip_description">Enter the tip percentage:</string>
+    <string name="button_title">Calculate Tip</string>
+    <string name="value_one">1</string>
+    <string name="return_to_main_menu">Return To Main Menu</string>
+</resources>
