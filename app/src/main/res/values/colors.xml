@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#303F9F</color>
+    <color name="colorPrimary">#1569C7</color>
+    <color name="colorPrimaryDark">#1569C7</color>
+    <color name="colorAccent">#1569C7</color>
+    <color name="textColor">#009ACD</color>
+    <color name="backgroundColor">#FFDAB9</color>
+    <color name="suggest_tip">#3F9FFF</color>
+    <color name="header_color">#F5F5F5</color>
+    <color name="toolbar_color">#1589FF</color>
 </resources>

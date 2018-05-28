@@ -7,11 +7,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mDone;
     private TextView mSuggestTip;
     private CoordinatorLayout mSnackBarLayout;
+    private ImageButton mSettingsButton;
+    private MyApplication mMyApplication;
 
     public void createSnackBar(String snackBarMessage){
         final Snackbar snackbar = Snackbar.make(mSnackBarLayout, snackBarMessage, Snackbar.LENGTH_INDEFINITE);
@@ -51,8 +55,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mMyApplication = ((MyApplication)getApplicationContext());
+        mSettingsButton = (ImageButton) findViewById(R.id.settings_button);
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View newView) {
+                Intent goToSettingsPageIntent = new Intent(newView.getContext(), Settings.class);
+                newView.getContext().startActivity(goToSettingsPageIntent);
+            }
+        });
         mEditAmount = (EditText) findViewById(R.id.total_amount);
+        String defaultCurreny = mMyApplication.getDefaultCurrency();
+        String currencySign;
+        if(defaultCurreny.equals("Dollar")){
+            currencySign = "$";
+        }else if(defaultCurreny.equals("Pound")){
+            currencySign = "£";
+        }else if(defaultCurreny.equals("Euro")){
+            currencySign = "€";
+        }else{
+            currencySign = "";
+        }
+        mEditAmount.setText(currencySign);
         mEditPercentage = (EditText) findViewById(R.id.tip_percentage);
+        mEditPercentage.setText(mMyApplication.getDefaultTip() == null ? "" : String.valueOf(mMyApplication.getDefaultTip()));
         mNumberOfPeople = (EditText) findViewById(R.id.number_of_people);
         mDone = (Button) findViewById(R.id.done);
         mSnackBarLayout = findViewById(R.id.snackbar_container);

@@ -6,4 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_currency"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/textColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/currency_dropdown"
+        android:layout_marginTop="10dp"
+        android:id="@+id/default_currency"
+        />
+
+    <Spinner
+        android:id="@+id/currency_dropdown"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/default_currency"
+        />
+
+    <TextView
+        android:id="@+id/display_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/currency_dropdown"
+        android:text="@string/default_tip_percentage_prompt"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/textColor"
+        />
+
+    <SeekBar
+        android:id="@+id/select_default_tip_percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/display_tip"
+        app:layout_constraintBottom_toTopOf="@+id/set_default_button"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/set_default_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_default"
+        app:layout_constraintTop_toBottomOf="@+id/select_default_tip_percentage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
