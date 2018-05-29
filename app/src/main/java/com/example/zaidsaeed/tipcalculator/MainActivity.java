@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private EditText mEditAmount;
+    private PrefixEditText mEditAmount;
     private EditText mEditPercentage;
     private EditText mNumberOfPeople;
     private Button mDone;
@@ -44,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 snackbar.dismiss();
-                mEditAmount.setText("");
-                mEditPercentage.setText("");
             }
         });
         snackbar.show();
@@ -55,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mPrefManager = new PrefManager(this);
+        mSnackBarLayout = findViewById(R.id.snackbar_container);
+
         mSettingsButton = (ImageButton) findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 newView.getContext().startActivity(goToSettingsPageIntent);
             }
         });
-        mEditAmount = (EditText) findViewById(R.id.total_amount);
+
+
         String defaultCurreny = mPrefManager.getDefaultCurrency();
         String currencySign;
         if(defaultCurreny.equals("Dollar")){
@@ -76,16 +80,70 @@ public class MainActivity extends AppCompatActivity {
         }else{
             currencySign = "";
         }
-        mEditAmount.setText(currencySign);
+
+        mEditAmount = (PrefixEditText) findViewById(R.id.total_amount);
+        mEditAmount.setTag(currencySign);
+        if(mEditAmount.getText().toString().length() == 0){
+            mEditAmount.setError("Please Enter an amount");
+        }
+        mEditAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setError("Please Enter an amount");
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setError("Please Enter an amount");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setError("Please Enter an amount");
+                }
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setTag("");
+                }
+            }
+        });
+
         mEditPercentage = (EditText) findViewById(R.id.tip_percentage);
         Intent suggestTipIntent = getIntent();
-        Double suggestedTipRating = suggestTipIntent.getDoubleExtra("tip_percentage", 0.0);
+        Float suggestedTipRating = suggestTipIntent.getFloatExtra("tip_percentage", (float) 0.0);
         String defaultTip = mPrefManager.getDefaultTip() == null ? "" : String.valueOf(mPrefManager.getDefaultTip());
         mEditPercentage.setText(defaultTip);
-        mEditPercentage.setText(suggestedTipRating != null ? String.valueOf(suggestedTipRating) : defaultTip);
+        mEditPercentage.setText(suggestedTipRating != (float) 0.0 ? String.valueOf(suggestedTipRating) : defaultTip);
+        mEditPercentage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(mEditPercentage.getText().toString().length() == 0){
+                    mEditPercentage.setError("Please enter a tip percentage");
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(mEditPercentage.getText().toString().length() == 0){
+                    mEditPercentage.setError("Please enter a tip percentage");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mEditPercentage.getText().toString().length() == 0){
+                    mEditPercentage.setError("Please enter a tip percentage");
+                }
+            }
+        });
+
         mNumberOfPeople = (EditText) findViewById(R.id.number_of_people);
-        mDone = (Button) findViewById(R.id.done);
-        mSnackBarLayout = findViewById(R.id.snackbar_container);
+        mNumberOfPeople.setText("1");
+
         mSuggestTip = (TextView) findViewById(R.id.tip_suggestion);
         mSuggestTip.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mDone = (Button) findViewById(R.id.done);
         mDone.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -102,11 +161,13 @@ public class MainActivity extends AppCompatActivity {
                     createSnackBar("Please Enter a bill amount.");
                 }else if(mEditPercentage.getText().toString().length() == 0){
                     createSnackBar("Please Enter a tip percentage");
-                }else{
-                    double amount = Double.parseDouble(mEditAmount.getText().toString().substring(1));
+                } else if (mNumberOfPeople.getText().toString().length() == 0) {
+                    createSnackBar("Please Enter the number of people:");
+                } else {
+                    double amount = Double.parseDouble(mEditAmount.getText().toString());
                     double tipPercentage = Double.parseDouble(mEditPercentage.getText().toString());
                     Integer numberOfPeople = Integer.parseInt(mNumberOfPeople.getText().toString());
-                    double tip_result = (amount)*((tipPercentage)/100);
+                    double tip_result = (amount) * ((tipPercentage) / 100);
                     Intent viewTipIntent = new Intent(v.getContext(), DisplayTip.class);
                     viewTipIntent.putExtra("tip_result", tip_result);
                     viewTipIntent.putExtra("amount", amount);

@@ -32,7 +32,7 @@ public class SuggestTip extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent goToHomePageIntent = new Intent(v.getContext(), MainActivity.class);
-                        goToHomePageIntent.putExtra("tip_percentage", rating);
+                        goToHomePageIntent.putExtra("tip_percentage", (rating*2)+10);
                         v.getContext().startActivity(goToHomePageIntent);
                     }
                 });

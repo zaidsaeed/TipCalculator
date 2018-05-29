@@ -13,6 +13,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/rounded_edges"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="15dp"
         />
 
     <TextView
@@ -21,7 +26,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bill_amount"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/rounded_edges"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/total_amount"
@@ -29,7 +39,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tip_amount"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/rounded_edges"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/per_person_pay"
@@ -38,6 +53,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/total_amount"
         app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/rounded_edges"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="15dp"
         />
 
     <Button
@@ -48,6 +68,9 @@
         app:layout_constraintTop_toBottomOf="@+id/per_person_pay"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         />
 
 </android.support.constraint.ConstraintLayout>
