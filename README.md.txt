@@ -1,0 +1,1 @@
+Tip calculator is an android application that calculates the tip amount to pay at a restaurant.
