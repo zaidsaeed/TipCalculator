@@ -20,6 +20,7 @@ public class DisplayTip extends AppCompatActivity {
     private TextView billAmount;
     private TextView tipAmount;
     private TextView totalAmount;
+    private TextView perPersonTip;
     private TextView perPersonPay;
     private Button mReturnToMainMenu;
     /*Used to round off all double values to two decimal places */
@@ -32,21 +33,26 @@ public class DisplayTip extends AppCompatActivity {
         Double tip_result = mainActivityIntent.getDoubleExtra("tip_result", 0.0);
         Double amount = mainActivityIntent.getDoubleExtra("amount", 0.0);
         Integer numberOfPeople = mainActivityIntent.getIntExtra("numberOfPeople", 1);
+        String perPersonTipValue = df2.format(tip_result/numberOfPeople);
         String total_amount = df2.format(tip_result + amount);
         String perPersonPayAmount = df2.format(Double.parseDouble(total_amount)/numberOfPeople);
 
         billAmount = (TextView) findViewById(R.id.bill_amount);
-        billAmount.setText("The Bill Amount is: " + amount);
+        billAmount.setText("The bill amount is: " + amount);
         tipAmount = (TextView) findViewById(R.id.tip_amount);
-        tipAmount.setText("The Chosen Tip Amount is: " + tip_result);
+        tipAmount.setText("The chosen tip amount is: " + tip_result);
         totalAmount = (TextView) findViewById(R.id.total_amount);
-        totalAmount.setText("The Total Bill is: " + total_amount);
+        totalAmount.setText("The total bill is: " + total_amount);
+        perPersonTip = (TextView) findViewById(R.id.tip_per_person);
+        perPersonTip.setText("The tip paid per person is: "+ perPersonTipValue);
+        if(numberOfPeople == 1){
+            perPersonTip.setVisibility(View.GONE);
+        }
         perPersonPay = (TextView) findViewById(R.id.per_person_pay);
-        perPersonPay.setText("The Pay Per Person is: "+ perPersonPayAmount);
+        perPersonPay.setText("The total pay per person is: "+ perPersonPayAmount);
         if(numberOfPeople == 1){
             perPersonPay.setVisibility(View.GONE);
         }
-
         mReturnToMainMenu = (Button) findViewById(R.id.return_to_main_menu);
         mReturnToMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override

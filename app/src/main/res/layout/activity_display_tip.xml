@@ -47,7 +47,7 @@
         android:layout_marginTop="15dp"/>
 
     <TextView
-        android:id="@+id/per_person_pay"
+        android:id="@+id/tip_per_person"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -59,6 +59,21 @@
         android:textColor="@color/textColor"
         android:layout_marginTop="15dp"
         />
+
+    <TextView
+        android:id="@+id/per_person_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tip_per_person"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/rounded_edges"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="15dp"
+        />
+
 
     <Button
         android:id="@+id/return_to_main_menu"
