@@ -54,7 +54,6 @@ public class Settings extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] currencies = getResources().getStringArray(R.array.currencies);
                 mPrefManager.setDefaultCurrency(currencies[position]);
-
             }
 
             @Override
@@ -64,7 +63,9 @@ public class Settings extends AppCompatActivity {
         });
 
         mSetDefaultPercentage = (SeekBar) findViewById(R.id.select_default_tip_percentage);
+        mSetDefaultPercentage.setProgress(mPrefManager.getDefaultTip());
         mDisplayTipValue = (TextView) findViewById(R.id.display_tip);
+        mDisplayTipValue.setText("The default tip value is: " + String.valueOf(mPrefManager.getDefaultTip()) + "%");
         mSetDefaultPercentage.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

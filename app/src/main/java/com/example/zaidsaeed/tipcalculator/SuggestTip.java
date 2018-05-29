@@ -27,7 +27,7 @@ public class SuggestTip extends AppCompatActivity {
         mRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, final float rating, boolean fromUser) {
-                mTextView.setText("The calculated tip percentage is:" + String.valueOf((rating*2)+10));
+                mTextView.setText("The calculated tip percentage is: " + String.valueOf((rating*2)+10));
                 mButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
