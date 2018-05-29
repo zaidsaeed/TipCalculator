@@ -1,5 +1,6 @@
 package com.example.zaidsaeed.tipcalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ public class SuggestTip extends AppCompatActivity {
     RatingBar mRatingBar;
     Button mButton;
     TextView mTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +23,19 @@ public class SuggestTip extends AppCompatActivity {
         mRatingBar = (RatingBar) findViewById(R.id.star_rating_bar);
         mTextView = (TextView) findViewById(R.id.text_view);
         mButton = (Button) findViewById(R.id.use_tip);
+
         mRatingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            public void onRatingChanged(RatingBar ratingBar, final float rating, boolean fromUser) {
                 mTextView.setText(String.valueOf(rating));
+                mButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent goToHomePageIntent = new Intent(v.getContext(), MainActivity.class);
+                        goToHomePageIntent.putExtra("tip_percentage", rating);
+                        v.getContext().startActivity(goToHomePageIntent);
+                    }
+                });
             }
         });
 

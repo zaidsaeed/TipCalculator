@@ -18,7 +18,7 @@ public class Settings extends AppCompatActivity {
     private Spinner mCurrencyDropdown;
     private SeekBar mSetDefaultPercentage;
     private TextView mDisplayTipValue;
-    private MyApplication mMyApplication;
+    private PrefManager mPrefManager;
     private Button mSetDefaults;
 
     @Override
@@ -26,7 +26,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mMyApplication = ((MyApplication)getApplicationContext());
+        mPrefManager = new PrefManager(this);
 
         mCurrencyDropdown = (Spinner) findViewById(R.id.currency_dropdown);
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter.createFromResource(this, R.array.currencies, android.R.layout.simple_spinner_item);
@@ -39,7 +39,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] currencies = getResources().getStringArray(R.array.currencies);
-                mMyApplication.setDefaultCurrency(currencies[position]);
+                mPrefManager.setDefaultCurrency(currencies[position]);
             }
 
             @Override
@@ -64,7 +64,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mMyApplication.setDefaultTip(seekBar.getProgress());
+                mPrefManager.setDefaultTip(seekBar.getProgress());
             }
         });
 

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mSuggestTip;
     private CoordinatorLayout mSnackBarLayout;
     private ImageButton mSettingsButton;
-    private MyApplication mMyApplication;
+    private PrefManager mPrefManager;
 
     public void createSnackBar(String snackBarMessage){
         final Snackbar snackbar = Snackbar.make(mSnackBarLayout, snackBarMessage, Snackbar.LENGTH_INDEFINITE);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMyApplication = ((MyApplication)getApplicationContext());
+        mPrefManager = new PrefManager(this);
         mSettingsButton = (ImageButton) findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mEditAmount = (EditText) findViewById(R.id.total_amount);
-        String defaultCurreny = mMyApplication.getDefaultCurrency();
+        String defaultCurreny = mPrefManager.getDefaultCurrency();
         String currencySign;
         if(defaultCurreny.equals("Dollar")){
             currencySign = "$";
@@ -78,7 +78,11 @@ public class MainActivity extends AppCompatActivity {
         }
         mEditAmount.setText(currencySign);
         mEditPercentage = (EditText) findViewById(R.id.tip_percentage);
-        mEditPercentage.setText(mMyApplication.getDefaultTip() == null ? "" : String.valueOf(mMyApplication.getDefaultTip()));
+        Intent suggestTipIntent = getIntent();
+        Double suggestedTipRating = suggestTipIntent.getDoubleExtra("tip_percentage", 0.0);
+        String defaultTip = mPrefManager.getDefaultTip() == null ? "" : String.valueOf(mPrefManager.getDefaultTip());
+        mEditPercentage.setText(defaultTip);
+        mEditPercentage.setText(suggestedTipRating != null ? String.valueOf(suggestedTipRating) : defaultTip);
         mNumberOfPeople = (EditText) findViewById(R.id.number_of_people);
         mDone = (Button) findViewById(R.id.done);
         mSnackBarLayout = findViewById(R.id.snackbar_container);
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if(mEditPercentage.getText().toString().length() == 0){
                     createSnackBar("Please Enter a tip percentage");
                 }else{
-                    double amount = Double.parseDouble(mEditAmount.getText().toString());
+                    double amount = Double.parseDouble(mEditAmount.getText().toString().substring(1));
                     double tipPercentage = Double.parseDouble(mEditPercentage.getText().toString());
                     Integer numberOfPeople = Integer.parseInt(mNumberOfPeople.getText().toString());
                     double tip_result = (amount)*((tipPercentage)/100);
