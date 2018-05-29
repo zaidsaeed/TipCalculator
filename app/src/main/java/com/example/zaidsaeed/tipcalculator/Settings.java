@@ -21,6 +21,16 @@ public class Settings extends AppCompatActivity {
     private PrefManager mPrefManager;
     private Button mSetDefaults;
 
+    public int determineIndexInCurrenciesArray(String currency){
+        String[] currencies = getResources().getStringArray(R.array.currencies);
+        for(int i = 0; i<currencies.length; i++){
+            if(currencies[i].equals(currency)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +44,17 @@ public class Settings extends AppCompatActivity {
         staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mCurrencyDropdown.setAdapter(staticAdapter);
+        String selectedCurrency = mPrefManager.getDefaultCurrency();
+        int selectedCurrencyIndex = determineIndexInCurrenciesArray(selectedCurrency);
+        mCurrencyDropdown.setSelection(selectedCurrencyIndex);
+
 
         mCurrencyDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] currencies = getResources().getStringArray(R.array.currencies);
                 mPrefManager.setDefaultCurrency(currencies[position]);
+
             }
 
             @Override

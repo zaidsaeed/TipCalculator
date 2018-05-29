@@ -12,6 +12,7 @@
     <string name="default_currency">Please Select a Default Currency:</string>
     <string name="default_tip_percentage_prompt">Select a Default Tip Percentage:</string>
     <string name="set_default">Set Defaults</string>
+    <string name="your_service_rating_is">Your service rating is:</string>
     <string-array name="currencies">
         <item> Dollar </item>
         <item> Pound </item>

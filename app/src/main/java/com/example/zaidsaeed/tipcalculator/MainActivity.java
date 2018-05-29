@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout mSnackBarLayout;
     private ImageButton mSettingsButton;
     private PrefManager mPrefManager;
+    public String currencySign;
 
     public void createSnackBar(String snackBarMessage){
         final Snackbar snackbar = Snackbar.make(mSnackBarLayout, snackBarMessage, Snackbar.LENGTH_INDEFINITE);
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         String defaultCurreny = mPrefManager.getDefaultCurrency();
-        String currencySign;
         if(defaultCurreny.equals("Dollar")){
             currencySign = "$";
         }else if(defaultCurreny.equals("Pound")){
@@ -78,13 +78,14 @@ public class MainActivity extends AppCompatActivity {
         }else if(defaultCurreny.equals("Euro")){
             currencySign = "€";
         }else{
-            currencySign = "";
+            currencySign = "   ";
         }
 
         mEditAmount = (PrefixEditText) findViewById(R.id.total_amount);
         mEditAmount.setTag(currencySign);
         if(mEditAmount.getText().toString().length() == 0){
             mEditAmount.setError("Please Enter an amount");
+            mEditAmount.setTag("   ");
         }
         mEditAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,12 +93,24 @@ public class MainActivity extends AppCompatActivity {
                 if(mEditAmount.getText().toString().length() == 0){
                     mEditAmount.setError("Please Enter an amount");
                 }
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setTag("   ");
+                }
+                if(mEditAmount.getText().toString().length() != 0){
+                    mEditAmount.setTag(currencySign);
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(mEditAmount.getText().toString().length() == 0){
                     mEditAmount.setError("Please Enter an amount");
+                }
+                if(mEditAmount.getText().toString().length() == 0){
+                    mEditAmount.setTag("   ");
+                }
+                if(mEditAmount.getText().toString().length() != 0){
+                    mEditAmount.setTag(currencySign);
                 }
             }
 
@@ -107,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
                     mEditAmount.setError("Please Enter an amount");
                 }
                 if(mEditAmount.getText().toString().length() == 0){
-                    mEditAmount.setTag("");
+                    mEditAmount.setTag("   ");
+                }
+                if(mEditAmount.getText().toString().length() != 0){
+                    mEditAmount.setTag(currencySign);
                 }
             }
         });
